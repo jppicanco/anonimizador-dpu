@@ -1,0 +1,38 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "anonimizador-dpu"
+version = "0.1.0"
+description = "Anonimização local de processos judiciais em PDF para uso na Defensoria Pública da União"
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "AGPL-3.0-or-later" }
+authors = [{ name = "Defensoria Pública da União" }]
+dependencies = [
+    "PyMuPDF==1.26.3",
+    "pytesseract==0.3.13",
+    "Pillow==12.2.0",
+    "opencv-python==4.13.0.92",
+    "numpy==2.2.6",
+    "PySide6==6.12.0",
+]
+
+[project.optional-dependencies]
+dev = ["pytest==9.1.1"]
+
+[project.scripts]
+anonimizador-dpu = "anonimizador_dpu.app.main:main"
+
+[tool.setuptools.packages.find]
+include = ["anonimizador_dpu*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-ra"
+filterwarnings = ["ignore::DeprecationWarning"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"

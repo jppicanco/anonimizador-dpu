@@ -1,0 +1,58 @@
+================================================================
+ANONIMIZADOR DPU - componentes de terceiros e licencas
+================================================================
+
+Este pacote reune software de terceiros. As licencas abaixo
+permitem a redistribuicao nas condicoes indicadas.
+
+
+ANONIMIZADOR DPU
+   Licenca: AGPL-3.0 ou posterior
+   Em razao da licenca do PyMuPDF (abaixo), o proprio aplicativo e
+   distribuido sob AGPL-3.0. O codigo-fonte acompanha este pacote,
+   na pasta "codigo-fonte".
+
+
+PyMuPDF 1.26.3 - leitura, redacao e gravacao de PDF
+   Licenca: AGPL-3.0 (ha licenca comercial alternativa da Artifex)
+   https://pymupdf.readthedocs.io/
+
+   ATENCAO INSTITUCIONAL: a AGPL exige que quem recebe o programa
+   possa obter o codigo-fonte correspondente. Por isso ele vai junto.
+   A forma de distribuicao dentro da DPU deve ser avaliada pela area
+   juridica antes de qualquer divulgacao externa a instituicao.
+
+
+PySide6 6.12.0 - interface grafica (Qt para Python)
+   Licenca: LGPL-3.0
+   https://doc.qt.io/qtforpython/
+
+
+Tesseract OCR 5.x - reconhecimento optico de caracteres
+   Licenca: Apache-2.0
+   https://github.com/tesseract-ocr/tesseract
+   Redistribuido neste pacote, na pasta aplicativo/tesseract, com os
+   idiomas portugues (por), ingles (eng) e deteccao de orientacao
+   (osd). A licenca Apache-2.0 permite a redistribuicao.
+
+
+pytesseract - interface Python para o Tesseract
+   Licenca: Apache-2.0
+
+
+Pillow - manipulacao de imagens
+   Licenca: MIT-CMU
+
+
+numpy - operacoes numericas
+   Licenca: BSD-3-Clause
+
+
+Python 3.13 - interpretador embutido no executavel
+   Licenca: PSF License Agreement
+
+
+----------------------------------------------------------------
+NENHUM destes componentes acessa a rede durante o uso. O aplicativo
+bloqueia o acesso a sockets dentro do proprio processo enquanto
+processa documentos.

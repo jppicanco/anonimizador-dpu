@@ -1,0 +1,145 @@
+================================================================
+ANONIMIZADOR DPU - versao 0.1.0
+Preparacao local de copias anonimizadas de processos em PDF
+================================================================
+
+LEIA ISTO ANTES DE USAR. Sao tres minutos e evitam um problema serio.
+
+
+--------------------------------------------------------------
+1. COMO INSTALAR
+--------------------------------------------------------------
+
+Nao ha instalacao.
+
+   1. ANTES DE DESCOMPACTAR: clique com o botao direito no arquivo
+      ZIP, escolha "Propriedades" e, se existir a caixa "Desbloquear"
+      no rodape da janela, MARQUE-A e clique em OK.
+
+      Esse passo e importante. Todo arquivo baixado da internet ou do
+      SharePoint vem marcado pelo Windows como "de outro computador",
+      e a marca passa para tudo que sair de dentro do ZIP. Desbloquear
+      antes evita uma serie de avisos depois.
+
+   2. Descompacte o ZIP (botao direito, "Extrair tudo...").
+   3. Mova a pasta para onde preferir (Documentos, por exemplo).
+   4. Entre na pasta "aplicativo".
+   5. Clique duas vezes em AnonimizadorDPU.exe
+
+Nao e preciso ser administrador. Nada e instalado no Windows, nada
+e escrito no Registro, nada e baixado da internet.
+
+Se o Windows exibir a tela azul "O Windows protegeu o computador",
+clique em "Mais informacoes" e depois em "Executar assim mesmo". O
+aviso aparece porque o programa nao tem assinatura digital comercial
+- ela e paga e emitida por empresa privada -, e nao porque haja algo
+errado com ele.
+
+
+--------------------------------------------------------------
+2. COMO USAR, EM RESUMO
+--------------------------------------------------------------
+
+As cinco abas sao percorridas na ordem.
+
+   1 - Documentos   Adicione os PDFs e escolha a pasta de saida.
+                    USE UMA PASTA DIFERENTE da dos originais.
+   2 - Inspecao     Leia a lista de riscos antes de prosseguir.
+   3 - Categorias   Ajuste o que deve ser removido, se quiser.
+   4 - Revisao      ESTA E A ETAPA QUE IMPORTA. Veja o item 3.
+   5 - Resultado    Confira o veredito de cada documento.
+
+O arquivo original NUNCA e alterado. O resultado e gravado com o
+sufixo _ANONIMIZADO, junto com dois relatorios.
+
+
+--------------------------------------------------------------
+3. A ETAPA DE REVISAO
+--------------------------------------------------------------
+
+Tudo o que o programa encontrou JA ESTA MARCADO para remocao.
+Voce DESMARCA o que deve permanecer no texto.
+
+A coluna "Confianca" tem cor propria e diz onde olhar:
+
+   verde   - deteccao segura (CPF, e-mail, telefone...)
+   ambar   - confira
+   laranja - a deteccao pode estar errada; vale conferir
+
+Atencao a coluna "Areas": se aparecer "sem area", aquela ocorrencia
+NAO sera removida. Use "Marcar regiao na pagina" e arraste sobre ela.
+
+Assinaturas a mao, carimbos e fotos nao sao lidos pelo computador.
+Se houver, marque a regiao manualmente.
+
+
+--------------------------------------------------------------
+4. O QUE O VEREDITO SIGNIFICA - E O QUE NAO SIGNIFICA
+--------------------------------------------------------------
+
+APROVADO NOS TESTES AUTOMATIZADOS
+   Os testes desta versao passaram. NAO E CERTIFICADO DE
+   ANONIMIZACAO. Significa que o programa nao encontrou problema,
+   nao que nao exista problema.
+
+REVISAO OBRIGATORIA
+   Ha pendencia a resolver. Leia a lista.
+
+REPROVADO
+   NAO USE O ARQUIVO. Ha dado que deveria ter saido e continua la.
+
+
+--------------------------------------------------------------
+5. O QUE ESTA FERRAMENTA NAO FAZ
+--------------------------------------------------------------
+
+   - Nao le texto manuscrito.
+   - Nao entende o contexto: datas, doenca rara e detalhes do caso
+     podem identificar a pessoa mesmo sem nome nem CPF algum.
+   - Nao substitui a sua leitura do documento final.
+   - Nao foi homologada pela area de tecnologia da DPU.
+
+ANTES DE USAR COM PROCESSO SIGILOSO, leia o arquivo
+documentacao/LIMITACOES.md por inteiro. Ele e curto e e o documento
+mais importante do pacote.
+
+
+--------------------------------------------------------------
+6. PRIVACIDADE
+--------------------------------------------------------------
+
+Todo o processamento acontece no seu computador.
+
+Durante o processamento, o programa BLOQUEIA o acesso a rede dentro
+do proprio processo: qualquer tentativa de conexao falha de forma
+visivel, inclusive de bibliotecas de terceiros.
+
+Nenhum nome, CPF, endereco ou trecho dos autos e gravado em log.
+Os relatorios gerados nao contem dados pessoais originais.
+
+
+--------------------------------------------------------------
+7. SE DER PROBLEMA
+--------------------------------------------------------------
+
+"OCR local indisponivel"
+   O Tesseract acompanha este pacote, na pasta aplicativo/tesseract.
+   Se a mensagem aparecer, a pasta provavelmente nao foi copiada
+   junto. Descompacte o ZIP de novo, inteiro.
+
+O programa nao abre
+   Confirme que descompactou o ZIP de verdade, e nao esta rodando
+   de dentro dele. O Windows deixa "abrir" o ZIP sem extrair, e
+   nesse caso o programa nao funciona.
+
+Resultado estranho
+   Anote o documento e o codigo da pendencia que aparece na aba 5,
+   e procure quem lhe enviou este pacote.
+
+
+--------------------------------------------------------------
+8. LICENCAS
+--------------------------------------------------------------
+
+Ver LICENCAS.txt. O codigo-fonte acompanha o pacote, na pasta
+codigo-fonte, em cumprimento a licenca AGPL-3.0 do PyMuPDF.

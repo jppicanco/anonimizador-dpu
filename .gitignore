@@ -1,0 +1,32 @@
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+build/
+dist/
+*.spec.bak
+.pytest_cache/
+.ruff_cache/
+*.egg-info/
+
+# Nunca versionar documentos, saídas ou relatórios de processamento real
+saida/
+*_ANONIMIZADO.pdf
+*_relatorio.json
+*_relatorio.html
+fixtures_geradas/
+*.log
+
+# Pacote de distribuição e artefatos de empacotamento
+*.zip
+AnonimizadorDPU_pacote/
+tesseract/
+
+# Rede de segurança: nenhum PDF entra no repositório, salvo os exemplos
+# sintéticos. Documento real nunca deve ser versionado, nem por engano.
+*.pdf
+!exemplos/entrada/*.pdf
+
+# Editores
+.vscode/
+.idea/
