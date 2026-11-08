@@ -34,6 +34,10 @@ def _fonte(tamanho: int) -> ImageFont.FreeTypeFont:
     for caminho in (
         r"C:\Windows\Fonts\arial.ttf",
         r"C:\Windows\Fonts\calibri.ttf",
+        # macOS: sem uma fonte TrueType, o Pillow cai na fonte embutida de
+        # tamanho fixo e as imagens "digitalizadas" ficam ilegíveis para o OCR.
+        "/System/Library/Fonts/Supplemental/Arial.ttf",
+        "/Library/Fonts/Arial.ttf",
         "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf",
     ):
         if Path(caminho).exists():

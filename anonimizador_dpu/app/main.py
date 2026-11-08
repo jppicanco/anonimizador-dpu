@@ -11,12 +11,36 @@ administrador, não altera configurações do sistema e não acessa a rede.
 from __future__ import annotations
 
 import sys
+from pathlib import Path
 
 from PySide6.QtWidgets import QApplication, QMessageBox
 
 from ..core.audit_logger import configurar_log
 from ..core.config import APP_NOME, APP_VERSAO, Config
 from ..core.ocr_engine import verificar_ocr
+
+
+def _instalar_traducao_qt(app: QApplication) -> None:
+    """Traduz os textos padrão do próprio Qt para o português.
+
+    Sem isso, as caixas de confirmação mostram "Yes"/"No" e, no Mac, o menu do
+    aplicativo aparece em inglês ("Quit", "Hide Others"…). Se o arquivo de
+    tradução não estiver presente (o executável Windows não o inclui), nada
+    muda.
+    """
+    import PySide6
+    from PySide6.QtCore import QLibraryInfo, QLocale, QTranslator
+
+    pastas = (
+        QLibraryInfo.path(QLibraryInfo.LibraryPath.TranslationsPath),
+        str(Path(PySide6.__file__).resolve().parent / "Qt" / "translations"),
+    )
+    tradutor = QTranslator(app)
+    portugues = QLocale("pt_BR")
+    for pasta in pastas:
+        if tradutor.load(portugues, "qtbase", "_", pasta):
+            app.installTranslator(tradutor)
+            return
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -28,6 +52,13 @@ def main(argv: list[str] | None = None) -> int:
     app.setApplicationName(APP_NOME)
     app.setApplicationVersion(APP_VERSAO)
     app.setOrganizationName("Defensoria Pública da União")
+    if sys.platform == "darwin":
+        # A folha de estilo do aplicativo (ui/tema.py) desfigura abas e botões
+        # no estilo nativo do macOS. O Fusion respeita a folha de estilo,
+        # acompanha o tema claro/escuro do sistema e deixa a janela com a
+        # mesma aparência da versão Windows.
+        app.setStyle("Fusion")
+    _instalar_traducao_qt(app)
 
     from .ui.main_window import JanelaPrincipal  # import tardio: acelera a abertura
     from .ui.tema import estilo_aplicacao
