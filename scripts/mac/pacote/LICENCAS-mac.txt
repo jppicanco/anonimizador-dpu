@@ -1,0 +1,74 @@
+================================================================
+ANONIMIZADOR DPU para Mac - componentes de terceiros e licenças
+================================================================
+
+Este pacote reúne software de terceiros. As licenças abaixo
+permitem a redistribuição nas condições indicadas. Os textos
+integrais das licenças do OCR estão dentro do aplicativo, em
+Anonimizador DPU.app/Contents/Resources/tesseract/licencas.
+
+
+ANONIMIZADOR DPU
+   Licença: AGPL-3.0 ou posterior
+   Em razão da licença do PyMuPDF (abaixo), o próprio aplicativo é
+   distribuído sob AGPL-3.0. O código-fonte acompanha este pacote,
+   na pasta "codigo-fonte", inclusive os scripts que geram esta
+   versão para Mac (codigo-fonte/scripts/mac).
+
+
+PyMuPDF 1.26.3 - leitura, redação e gravação de PDF
+   Licença: AGPL-3.0 (há licença comercial alternativa da Artifex)
+   https://pymupdf.readthedocs.io/
+
+   ATENÇÃO INSTITUCIONAL: a AGPL exige que quem recebe o programa
+   possa obter o código-fonte correspondente. Por isso ele vai junto.
+   A forma de distribuição dentro da DPU deve ser avaliada pela área
+   jurídica antes de qualquer divulgação externa à instituição.
+
+
+PySide6 6.11.3 e Qt 6.11 - interface gráfica (Qt para Python)
+   Licença: LGPL-3.0
+   https://doc.qt.io/qtforpython/
+   As bibliotecas do Qt ficam separadas e substituíveis, em
+   Anonimizador DPU.app/Contents/Frameworks/PySide6/Qt/lib.
+
+
+Tesseract OCR 5.5.4 - reconhecimento óptico de caracteres
+   Licença: Apache-2.0
+   https://github.com/tesseract-ocr/tesseract
+   Compilado a partir do código-fonte oficial e embutido no
+   aplicativo (Contents/Frameworks/tesseract), com os idiomas
+   português (por), inglês (eng) e detecção de orientação (osd), do
+   repositório tessdata 4.1.0 (Apache-2.0). Compilado sem acesso à
+   internet (sem libcurl).
+
+   Bibliotecas incorporadas ao executável do Tesseract:
+      Leptonica 1.87.0      - licença BSD-2-Clause
+      libpng 1.6.59         - licença libpng (PNG Reference Library)
+      libtiff 4.7.2         - licença libtiff (estilo BSD)
+      libjpeg-turbo 3.2.1   - licenças IJG, BSD-3-Clause e zlib
+      zlib                  - a do próprio macOS
+
+
+pytesseract 0.3.13 - interface Python para o Tesseract
+   Licença: Apache-2.0
+
+
+Pillow 12.2.0 - manipulação de imagens
+   Licença: MIT-CMU
+
+
+numpy 2.2.6 - operações numéricas
+   Licença: BSD-3-Clause
+
+
+Python 3.13 - interpretador embutido no aplicativo
+   Licença: PSF License Agreement
+   Distribuição "python-build-standalone" (Astral), compatível com
+   versões anteriores do macOS.
+
+
+----------------------------------------------------------------
+NENHUM destes componentes acessa a rede durante o uso. O aplicativo
+bloqueia o acesso a sockets dentro do próprio processo enquanto
+processa documentos.

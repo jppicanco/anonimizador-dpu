@@ -1,0 +1,191 @@
+================================================================
+ANONIMIZADOR DPU - versão 0.1.0 para Mac
+Preparação local de cópias anonimizadas de processos em PDF
+================================================================
+
+LEIA ISTO ANTES DE USAR. São três minutos e evitam um problema sério.
+
+
+--------------------------------------------------------------
+1. ANTES DE TUDO: O SEU MAC SERVE?
+--------------------------------------------------------------
+
+   - Mac com chip Apple (M1, M2, M3, M4, M5 ou mais novo).
+     Para conferir: menu Apple > Sobre Este Mac. Na linha "Chip"
+     deve aparecer "Apple M...". Macs com processador Intel não são
+     atendidos por esta versão.
+
+   - macOS 15 (Sequoia) ou mais recente. Na mesma janela aparece a
+     versão do macOS. Em sistema mais antigo, o Mac avisa que o
+     programa não pode ser aberto.
+
+
+--------------------------------------------------------------
+2. COMO INSTALAR
+--------------------------------------------------------------
+
+   1. Clique duas vezes no arquivo AnonimizadorDPU-mac.dmg.
+   2. Na janela que se abre, arraste "Anonimizador DPU" para cima do
+      atalho "Aplicativos", que está ao lado.
+   3. Ejete o disco "Anonimizador DPU" (botão de ejetar ao lado do
+      nome, na barra lateral do Finder).
+
+Recebeu o ZIP em vez do DMG? Clique duas vezes no ZIP e arraste
+"Anonimizador DPU" para a pasta Aplicativos.
+
+Não é preciso ser administrador para usar. O OCR (leitura de páginas
+digitalizadas) já vem dentro do programa. Nada é baixado da internet.
+
+
+--------------------------------------------------------------
+3. A PRIMEIRA ABERTURA (só uma vez)
+--------------------------------------------------------------
+
+Na primeira vez, o Mac bloqueia o programa com um aviso parecido com:
+
+   "A Apple não pôde verificar se 'Anonimizador DPU' está livre de
+   malware que pode danificar o Mac ou comprometer sua privacidade."
+
+O aviso aparece porque o programa não tem a assinatura paga da Apple
+- e não porque haja algo errado com ele. Para liberar:
+
+   1. No aviso, clique em "Concluído" (ou "OK"). NÃO clique em
+      "Mover para o Lixo".
+   2. Abra Ajustes do Sistema > Privacidade e Segurança.
+   3. Role até a seção "Segurança". Lá aparece a frase
+      "'Anonimizador DPU' foi bloqueado...". Clique em
+      "Abrir Mesmo Assim".
+   4. Confirme com a sua senha (ou Touch ID) e, no aviso seguinte,
+      clique de novo em "Abrir Mesmo Assim".
+
+Das próximas vezes o programa abre normalmente, pelo Launchpad, pelo
+Spotlight ou pela pasta Aplicativos.
+
+Se em vez disso aparecer "'Anonimizador DPU' está danificado e não
+pode ser aberto": abra o Terminal (Aplicativos > Utilitários >
+Terminal), cole a linha abaixo, tecle Enter e abra o programa de novo.
+
+   xattr -cr "/Applications/Anonimizador DPU.app"
+
+
+--------------------------------------------------------------
+4. COMO USAR, EM RESUMO
+--------------------------------------------------------------
+
+As cinco abas são percorridas na ordem.
+
+   1 - Documentos   Adicione os PDFs e escolha a pasta de saída.
+                    USE UMA PASTA DIFERENTE da dos originais.
+   2 - Inspeção     Leia a lista de riscos antes de prosseguir.
+   3 - Categorias   Ajuste o que deve ser removido, se quiser.
+   4 - Revisão      ESTA É A ETAPA QUE IMPORTA. Veja o item 5.
+   5 - Resultado    Confira o veredito de cada documento.
+
+O arquivo original NUNCA é alterado. O resultado é gravado com o
+sufixo _ANONIMIZADO, junto com dois relatórios.
+
+Para sair: Cmd+Q, ou menu "Anonimizador DPU" > "Sair do Anonimizador
+DPU".
+
+
+--------------------------------------------------------------
+5. A ETAPA DE REVISÃO
+--------------------------------------------------------------
+
+Tudo o que o programa encontrou JÁ ESTÁ MARCADO para remoção.
+Você DESMARCA o que deve permanecer no texto.
+
+A coluna "Confiança" tem cor própria e diz onde olhar:
+
+   verde   - detecção segura (CPF, e-mail, telefone...)
+   âmbar   - confira
+   laranja - a detecção pode estar errada; vale conferir
+
+Atenção à coluna "Áreas": se aparecer "sem área", aquela ocorrência
+NÃO será removida. Use "Marcar região na página" e arraste sobre ela.
+
+Assinaturas à mão, carimbos e fotos não são lidos pelo computador.
+Se houver, marque a região manualmente.
+
+
+--------------------------------------------------------------
+6. O QUE O VEREDITO SIGNIFICA - E O QUE NÃO SIGNIFICA
+--------------------------------------------------------------
+
+APROVADO NOS TESTES AUTOMATIZADOS
+   Os testes desta versão passaram. NÃO É CERTIFICADO DE
+   ANONIMIZAÇÃO. Significa que o programa não encontrou problema,
+   não que não exista problema.
+
+REVISÃO OBRIGATÓRIA
+   Há pendência a resolver. Leia a lista.
+
+REPROVADO
+   NÃO USE O ARQUIVO. Há dado que deveria ter saído e continua lá.
+
+
+--------------------------------------------------------------
+7. O QUE ESTA FERRAMENTA NÃO FAZ
+--------------------------------------------------------------
+
+   - Não lê texto manuscrito.
+   - Não entende o contexto: datas, doença rara e detalhes do caso
+     podem identificar a pessoa mesmo sem nome nem CPF algum.
+   - Não substitui a sua leitura do documento final.
+   - Não foi homologada pela área de tecnologia da DPU.
+
+ANTES DE USAR COM PROCESSO SIGILOSO, leia o arquivo
+documentacao/LIMITACOES.md por inteiro. Ele é curto e é o documento
+mais importante do pacote.
+
+
+--------------------------------------------------------------
+8. PRIVACIDADE
+--------------------------------------------------------------
+
+Todo o processamento acontece no seu computador.
+
+Durante o processamento, o programa BLOQUEIA o acesso à rede dentro
+do próprio processo: qualquer tentativa de conexão falha de forma
+visível, inclusive de bibliotecas de terceiros. O OCR embutido foi
+compilado sem nenhum componente de acesso à internet.
+
+Nenhum nome, CPF, endereço ou trecho dos autos é gravado em log.
+Os relatórios gerados não contêm dados pessoais originais.
+
+As preferências salvas pelo botão "Salvar configuração" ficam em
+~/Library/Application Support/anonimizador_dpu/config.json
+
+
+--------------------------------------------------------------
+9. SE DER PROBLEMA
+--------------------------------------------------------------
+
+O programa não abre
+   Confira os requisitos do item 1 e o procedimento do item 3.
+
+"OCR local indisponível"
+   O OCR vem dentro do programa. Se a mensagem aparecer, a cópia do
+   programa ficou incompleta: apague-o da pasta Aplicativos e arraste
+   de novo a partir do DMG.
+
+Quer conferir se está tudo certo?
+   Abra o Terminal, cole a linha abaixo e tecle Enter:
+
+   "/Applications/Anonimizador DPU.app/Contents/MacOS/AnonimizadorDPU" --verificar
+
+   O programa testa o OCR, o bloqueio de rede e processa dois PDFs
+   fictícios, sem abrir janela. Tudo certo se a última linha
+   disser "Aplicativo pronto para uso."
+
+Resultado estranho
+   Anote o documento e o código da pendência que aparece na aba 5,
+   e procure quem lhe enviou este pacote.
+
+
+--------------------------------------------------------------
+10. LICENÇAS
+--------------------------------------------------------------
+
+Ver LICENCAS.txt. O código-fonte acompanha o pacote, na pasta
+codigo-fonte, em cumprimento à licença AGPL-3.0 do PyMuPDF.

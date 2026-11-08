@@ -1,0 +1,24 @@
+# Dependências da versão para Mac (Apple Silicon), conferidas em macOS 27.2 com
+# Python 3.13.18. São as mesmas do requirements.txt, com três diferenças:
+#
+# * PySide6 6.11.3 (e não 6.12.0): os binários do PySide6 6.12.0 para Mac foram
+#   compilados para macOS 26 ou mais novo, embora o pacote se anuncie como
+#   macOS 14. A 6.11.3 roda a partir do macOS 15 e a interface usada pelo
+#   aplicativo (QtCore, QtGui, QtWidgets) é a mesma. Basta o pacote
+#   "Essentials", que contém esses três módulos.
+# * Sem opencv-python e reportlab: nenhum dos dois é importado pelo código (o
+#   executável Windows também exclui o OpenCV).
+# * Ferramentas de construção do aplicativo: PyInstaller, e CMake + Ninja para
+#   compilar o Tesseract embutido sem depender do Homebrew.
+
+PyMuPDF==1.26.3
+pytesseract==0.3.13
+Pillow==12.2.0
+numpy==2.2.6
+PySide6-Essentials==6.11.3
+
+pytest==9.1.1
+
+pyinstaller==6.22.3
+cmake==4.4.4
+ninja==1.13.2

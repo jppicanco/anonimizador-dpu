@@ -4,6 +4,10 @@ Aplicativo desktop para Windows 10 e 11 que prepara cópias anonimizadas de
 processos judiciais em PDF, **processando tudo localmente**, sem enviar
 documentos, textos, imagens ou metadados a qualquer serviço externo.
 
+> **Versão para Mac** (chip Apple, macOS 15 ou mais recente): mesmo código e
+> mesmo fluxo, com o OCR embutido. Requisitos, diferenças e como gerar o
+> pacote em [`docs/MAC.md`](docs/MAC.md).
+
 > **Aviso que não é opcional**
 > A aprovação técnica automatizada **não garante anonimização integral** e
 > **não substitui** a revisão humana nem a avaliação de conformidade com a
