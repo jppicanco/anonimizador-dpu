@@ -30,3 +30,8 @@ tesseract/
 # Editores
 .vscode/
 .idea/
+
+# Versão para Mac: Python portátil, downloads e compilação do Tesseract
+.build/
+# Arquivos que o Finder cria nas pastas que abre
+.DS_Store

@@ -40,6 +40,9 @@ def diretorio_config() -> Path:
     base = os.environ.get("APPDATA") or os.environ.get("XDG_CONFIG_HOME")
     if base:
         return Path(base) / APP_ID
+    if sys.platform == "darwin":
+        # Local convencional do macOS para dados de aplicativo do usuário.
+        return Path.home() / "Library" / "Application Support" / APP_ID
     return Path.home() / f".{APP_ID}"
 
 
@@ -50,8 +53,9 @@ def caminho_config() -> Path:
 def _raiz_da_aplicacao() -> Path:
     """Pasta onde o aplicativo está instalado.
 
-    No executável empacotado, é a pasta do próprio ``.exe``; a partir do
-    código-fonte, é a raiz do projeto.
+    No executável empacotado, é a pasta do próprio ``.exe`` (no Mac,
+    ``Contents/MacOS`` dentro do ``.app``); a partir do código-fonte, é a raiz
+    do projeto.
     """
     if getattr(sys, "frozen", False):
         return Path(sys.executable).parent
@@ -66,9 +70,16 @@ def _tesseract_padrao() -> str:
     nem ter privilégio de administrador. Em seguida vem o PATH e, por fim, os
     locais usuais de instalação.
     """
-    embutido = _raiz_da_aplicacao() / "tesseract" / "tesseract.exe"
-    if embutido.exists():
-        return str(embutido)
+    executavel = "tesseract.exe" if os.name == "nt" else "tesseract"
+    embutidos = [_raiz_da_aplicacao() / "tesseract" / executavel]
+    # No aplicativo de Mac (.app), o PyInstaller guarda o que foi embutido em
+    # Contents/Frameworks, e não ao lado do executável (Contents/MacOS).
+    interno = getattr(sys, "_MEIPASS", None)
+    if interno:
+        embutidos.append(Path(interno) / "tesseract" / executavel)
+    for embutido in embutidos:
+        if embutido.is_file():
+            return str(embutido)
 
     achado = shutil.which("tesseract")
     if achado:
@@ -76,6 +87,7 @@ def _tesseract_padrao() -> str:
     candidatos = [
         r"C:\Program Files\Tesseract-OCR\tesseract.exe",
         r"C:\Program Files (x86)\Tesseract-OCR\tesseract.exe",
+        "/opt/homebrew/bin/tesseract",  # Homebrew em Mac com chip Apple
         "/usr/bin/tesseract",
         "/usr/local/bin/tesseract",
     ]

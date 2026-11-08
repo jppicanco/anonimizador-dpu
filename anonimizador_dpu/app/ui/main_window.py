@@ -8,6 +8,7 @@ verificações obrigatórias tenham sido concluídas.
 from __future__ import annotations
 
 import html
+import sys
 from pathlib import Path
 
 from PySide6.QtCore import QUrl, Qt
@@ -93,11 +94,29 @@ class JanelaPrincipal(QMainWindow):
         )
 
         self.setWindowTitle(f"{APP_NOME} {APP_VERSAO}")
-        self.resize(1280, 820)
+        # No Mac a fonte do sistema é maior; 1440 pontos de largura dão à aba
+        # de revisão o mesmo respiro que 1280 dão no Windows e cabem na tela
+        # de qualquer MacBook com chip Apple (ver também _caber_na_tela).
+        self.resize(1440 if sys.platform == "darwin" else 1280, 820)
         self._montar()
         self._montar_menu()
         self._atualizar_estado_ocr()
         self._atualizar_rotulo_saida()
+        if sys.platform == "darwin":
+            self._caber_na_tela()
+
+    def _caber_na_tela(self) -> None:
+        """No Mac, a janela inicial não passa da área útil da tela.
+
+        Em notebooks pequenos com o Dock à mostra, 820 pontos de altura (mais a
+        barra de título) deixariam o rodapé da janela escondido atrás do Dock.
+        """
+        tela = self.screen().availableGeometry()
+        barra_de_titulo = 28
+        self.resize(
+            min(self.width(), tela.width()),
+            min(self.height(), tela.height() - barra_de_titulo),
+        )
 
     # ------------------------------------------------------------- construção
     def _montar(self) -> None:
@@ -138,7 +157,10 @@ class JanelaPrincipal(QMainWindow):
         a_pasta = QAction("Selecionar pasta de saída…", self)
         a_pasta.triggered.connect(self._selecionar_pasta)
         menu_arquivo.addAction(a_pasta)
-        menu_arquivo.addSeparator()
+        if sys.platform != "darwin":
+            # No Mac, "Sair" migra para o menu do aplicativo (abaixo), e o
+            # separador ficaria sobrando no fim do menu Arquivo.
+            menu_arquivo.addSeparator()
         a_sair = QAction("Sair", self)
         a_sair.triggered.connect(self.close)
         menu_arquivo.addAction(a_sair)
@@ -158,6 +180,15 @@ class JanelaPrincipal(QMainWindow):
         a_sobre = QAction("Sobre", self)
         a_sobre.triggered.connect(self._mostrar_sobre)
         menu_ajuda.addAction(a_sobre)
+
+        # No Mac, "Sair" e "Sobre" vão para o menu do aplicativo, como em todo
+        # programa do sistema (com o atalho Cmd+Q para sair). Os demais itens
+        # ficam explicitamente onde estão: sem isso, o Qt adivinha pelo texto
+        # e poderia mover algum deles. Nas outras plataformas, nada muda.
+        for acao in (a_abrir, a_pasta, a_ocr, a_salvar, a_limites):
+            acao.setMenuRole(QAction.MenuRole.NoRole)
+        a_sair.setMenuRole(QAction.MenuRole.QuitRole)
+        a_sobre.setMenuRole(QAction.MenuRole.AboutRole)
 
     # ------------------------------------------------------------ aba 1
     def _aba_documentos(self) -> QWidget:
@@ -407,6 +438,11 @@ class JanelaPrincipal(QMainWindow):
         direita = QWidget()
         col = QVBoxLayout(direita)
         self.visualizador = VisualizadorPagina()
+        if sys.platform == "darwin":
+            # Com a altura mínima original (560), a janela no Mac ficava mais
+            # alta que a área útil da tela de um MacBook. A página continua
+            # crescendo com a janela; só o mínimo diminui.
+            self.visualizador.setMinimumSize(420, 420)
         self.visualizador.regiao_marcada.connect(self._regiao_marcada)
         col.addWidget(self.visualizador, 1)
         self.lb_marcacao = QLabel(

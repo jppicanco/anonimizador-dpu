@@ -12,12 +12,15 @@ apenas em caso de dúvida.
 
 from __future__ import annotations
 
+import sys
+
 from PySide6.QtCore import Qt, Signal
 from PySide6.QtGui import QBrush, QColor
 from PySide6.QtWidgets import (
     QAbstractItemView,
     QCheckBox,
     QComboBox,
+    QGridLayout,
     QGroupBox,
     QHBoxLayout,
     QHeaderView,
@@ -129,6 +132,10 @@ class PainelRevisao(QWidget):
         self.ed_busca = QLineEdit()
         self.ed_busca.setPlaceholderText("Documento ou pseudônimo…")
         self.ed_busca.textChanged.connect(self.atualizar)
+        if sys.platform == "darwin":
+            # Com a fonte maior do Mac, os filtros vizinhos espremiam o campo
+            # de busca até ele virar um quadradinho com reticências.
+            self.ed_busca.setMinimumWidth(150)
         filtros.addWidget(self.ed_busca, 1)
 
         self.chk_valores = QCheckBox("Exibir valores originais (apenas para decidir)")
@@ -149,7 +156,6 @@ class PainelRevisao(QWidget):
         layout.addWidget(self.tabela, 1)
 
         acoes = QGroupBox("Decisões")
-        linha = QHBoxLayout(acoes)
         self.bt_confirmar = QPushButton("Marcar selecionadas para remoção")
         self.bt_confirmar.clicked.connect(lambda: self._definir(Status.CONFIRMADO))
         self.bt_rejeitar = QPushButton("Desmarcar selecionadas (manter no texto)")
@@ -162,15 +168,25 @@ class PainelRevisao(QWidget):
         self.bt_separar.clicked.connect(self._separar)
         self.bt_regiao = QPushButton("Marcar região na página")
         self.bt_regiao.clicked.connect(self.marcar_regiao_solicitada.emit)
-        for bt in (
+        botoes = (
             self.bt_confirmar,
             self.bt_rejeitar,
             self.bt_equivalentes,
             self.bt_categoria,
             self.bt_separar,
             self.bt_regiao,
-        ):
-            linha.addWidget(bt)
+        )
+        if sys.platform == "darwin":
+            # A fonte do sistema no Mac é maior que a do Windows: numa fileira
+            # só, os seis botões deixavam a janela mais larga que a tela de um
+            # MacBook Air. Em duas fileiras de três, cabem.
+            grade = QGridLayout(acoes)
+            for indice, bt in enumerate(botoes):
+                grade.addWidget(bt, indice // 3, indice % 3)
+        else:
+            linha = QHBoxLayout(acoes)
+            for bt in botoes:
+                linha.addWidget(bt)
         layout.addWidget(acoes)
 
         self.lb_resumo = QLabel()
